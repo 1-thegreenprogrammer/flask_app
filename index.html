@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload PDF</title>
+</head>
+<body>
+    <h1>Upload PDF</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <label for="name">Name of Content:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br><br>
+
+        <label for="pdf">PDF File:</label>
+        <input type="file" id="pdf" name="pdf" accept="application/pdf" required><br><br>
+
+        <label for="comment">Comment:</label><br>
+        <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br><br>
+
+        <button type="button" onclick="uploadPDF()">Upload</button>
+    </form>
+
+    <script>
+        function uploadPDF() {
+            const formData = new FormData(document.getElementById('uploadForm'));
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+              .then(data => alert('Upload successful: ' + data.message))
+              .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
